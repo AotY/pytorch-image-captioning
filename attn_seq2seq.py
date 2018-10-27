@@ -63,7 +63,7 @@ class AttnSeq2seq(nn.Module):
 
         return decoder_outputs
 
-    def evaluate(self, images, decoder_input):
+    def decode(self, images, decoder_input):
         """
         Args:
             images: [batch_size, 256, 256]
@@ -73,9 +73,8 @@ class AttnSeq2seq(nn.Module):
         encoder_outputs = self.encoder(images)
         decode_outputs = []
         for i in range(self.max_len):
-            decoder_output, attn_weight = self.decoder(decoder_input,
-                                                None,
-                                                encoder_outputs)
+            decoder_output, attn_weight = self.decoder.decode(decoder_input,
+                                                       encoder_outputs)
             # decoder_output: [batch_size, 1, vocab_size]
             decoder_input = decoder_output.argmax(dim=2)
             decode_outputs.append(decoder_input)
