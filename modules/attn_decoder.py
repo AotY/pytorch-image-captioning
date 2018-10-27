@@ -79,7 +79,7 @@ class AttnDecoder(nn.Module):
             atten_size=hidden_size
         )
 
-        self.lstm = nn.LSTM(embedding_size,
+        self.lstm = nn.LSTM(hidden_size,
                             hidden_size,
                             num_layers,
                             batch_first=True)
@@ -101,6 +101,7 @@ class AttnDecoder(nn.Module):
         embedded = self.dropout(embedded)
 
 
+        encoder_outputs = encoder_outputs.view(batch_size, -1, self.encoder_size)
         context_embedded, attn_weights = self.attn(encoder_outputs, embedded)
 
         if lengths is not None:
@@ -115,6 +116,8 @@ class AttnDecoder(nn.Module):
         outputs = self.log_softmax(outputs)
 
         return outputs, attn_weights
+
+
 
 
 
