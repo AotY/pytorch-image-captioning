@@ -24,8 +24,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import transforms
 
-from modules.encoder import Encoder
-from modules.decoder import Decoder
+from attn_seq2seq import AttnSeq2seq
 from coco_dataset import CocoDataset
 from vocab import Vocab
 
@@ -165,12 +164,11 @@ if __name__ == '__main__':
     vocab = load_vocab()
     data_loader = build_data_loader(vocab)
     print(data_loader)
-    encoder, decoder = build_model(vocab.size, vocab.padid)
+    model = build_model(vocab.size, vocab.padid)
     criterion = build_criterion(vocab.padid)
-    optimizer = build_optimizer(encoder, decoder)
+    optimizer = build_optimizer(model)
     train_epoch(
-        encoder,
-        decoder,
+        model,
         data_loader,
         criterion,
         optimizer

@@ -36,7 +36,7 @@ class AttnSeq2seq(nn.Module):
         self.decoder = AttnDecoder(
             vocab_size,
             encoder_size,
-            embedding_size
+            embedding_size,
             hidden_size,
             num_layers,
             dropout,
