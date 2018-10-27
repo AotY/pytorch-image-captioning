@@ -24,7 +24,7 @@ class AttnEncoder(nn.Module):
         super(AttnEncoder, self).__init__()
 
         resnet152 = torchvision.models.resnet152(pretrained=True)
-        modules = list[resnet152.children()][:-2] # remove avgpool and fc layer.
+        modules = list(resnet152.children())[:-2] # remove avgpool and fc layer.
 
         self.cnn = nn.Sequential(*modules)
 
