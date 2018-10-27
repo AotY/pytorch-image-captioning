@@ -39,11 +39,9 @@ class AttnEncoder(nn.Module):
             outputs: [batch_size, encode_image_size, encode_image_size, 2048]
 
         """
-        print('images shape: {}'.format(images.shape))
         # Extract feature from images
         with torch.no_grad():
             features = self.cnn(images) #[batch_size, 2048, w/32, w/32]
-            print('features shape: {}'.format(features.shape))
 
         outputs = self.adaptive_pool(features) #[batch_size, 2048, encode_image_size, encode_image_size]
         outputs = outputs.permute(0, 2, 3, 1) #[batch_size, encode_image_size, encode_image_size, 2048]
